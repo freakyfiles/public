@@ -15,7 +15,7 @@ Write-Host $OID -ForegroundColor Green
 $adSchema = (Get-ADRootDSE).schemaNamingContext
  
 # get user schema
-$userSchema = Get-ADObject -SearchBase $adSchema -Filter "Name -eq 'User'"
+$userSchema = Get-ADObject -SearchBase $adSchema -Filter "Name -eq 'fjenkins_test'"
 # set the short name for custom attribute with no spaces
 $attributeName = "legacypasswd"
 # set the short description for custom attribute
@@ -42,3 +42,6 @@ New-ADObject -Name  $attributeName -Type attributeSchema -Path $adSchema -OtherA
  
 # add the custom attribute to user class
 $userSchema | Set-ADObject -Add @{mayContain = $attributeName} 
+
+# Finally Add attribute to user
+#Set-ADUser fjenkins_test -Add @{legacypasswd="NewYorkISD"}
